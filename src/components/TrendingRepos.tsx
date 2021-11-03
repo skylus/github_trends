@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import classNames from "classnames";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
+import { getMostPopularRepos, isRepoStarredByCurrentUser, toggleRepoStarForCurrentUser } from "../utils/githubUtils";
 import Repo from "../interfaces/Repo";
-import { getMostPopularRepos, isStarred, toggleRepoStarForCurrentUser } from "../services/GithubService";
-import classNames from "classnames";
 
 function TrendingRepos() {
     const [repos, setRepos] = useState<Repo[]>([]);
@@ -48,7 +48,7 @@ function TrendingRepos() {
                     </tr>
                 </thead>
                 <tbody>
-                    {repos.filter(repo => !showStarredOnly || isStarred(repo.id))
+                    {repos.filter(repo => !showStarredOnly || isRepoStarredByCurrentUser(repo.id))
                       .map(({ id, fullName, starsCount, url, watchersCount, forksCount, pushedAt, description }) => (
                         <tr key={id}>
                             <td>{id}</td>
@@ -62,14 +62,14 @@ function TrendingRepos() {
                             <td>{watchersCount}</td>
                             <td>
                                 <button
-                                    className={classNames("button is-light", { "is-primary": isStarred(id) })}
+                                    className={classNames("button is-light", { "is-primary": isRepoStarredByCurrentUser(id) })}
                                     onClick={() => {
                                         toggleRepoStarForCurrentUser(id);
                                         setShouldUpdateStarred(true);
                                     }}
                                 >
                                     <FontAwesomeIcon icon={faStar} />
-                                    <span className="ml-1">{isStarred(id) ? 'Unstar' : 'Star'}</span>
+                                    <span className="ml-1">{isRepoStarredByCurrentUser(id) ? 'Unstar' : 'Star'}</span>
                                 </button>
                             </td>
                         </tr>

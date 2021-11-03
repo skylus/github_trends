@@ -53,9 +53,9 @@ const toggleRepoStarForCurrentUser = (repoID: number): void => {
     [...currentlyStarredRepos, repoID]));
 }
 
-const isStarred = (repoID: number) => {
+const isRepoStarredByCurrentUser = (repoID: number) => {
   const currentlyStarredRepos = getStarredReposForCurrentUser();
   return currentlyStarredRepos.includes(repoID);
 }
 
-export { getMostPopularRepos, toggleRepoStarForCurrentUser, isStarred, getStarredReposForCurrentUser };
+export { getMostPopularRepos, toggleRepoStarForCurrentUser, isRepoStarredByCurrentUser, getStarredReposForCurrentUser };
