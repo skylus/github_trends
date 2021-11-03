@@ -8,6 +8,7 @@ import classNames from "classnames";
 function TrendingRepos() {
     const [repos, setRepos] = useState<Repo[]>([]);
     const [shouldUpdateStarred, setShouldUpdateStarred] = useState(false);
+    const [showStarredOnly, setShowStarredOnly] = useState(false);
 
     useEffect(() => {
         async function fetchRepos() {
@@ -24,7 +25,15 @@ function TrendingRepos() {
     }, [shouldUpdateStarred]);
 
     return (
-        <div>
+        <div className="mx-1">
+            <div className="box my-4">
+                <div className="field">
+                    <label className="checkbox">
+                        <input type="checkbox" onChange={(e) => setShowStarredOnly(e.target.checked)} />
+                        <span className="ml-2">Show only starred</span>
+                    </label>
+                </div>
+            </div>
             <table className="table is-fullwidth is-striped">
                 <thead>
                     <tr>
@@ -38,7 +47,8 @@ function TrendingRepos() {
                     </tr>
                 </thead>
                 <tbody>
-                    {repos.map(({ id, fullName, starsCount, url, watchersCount, forksCount, pushedAt }) => <tr key={id}>
+                    {repos.filter(repo => !showStarredOnly || isStarred(repo.id))
+                      .map(({ id, fullName, starsCount, url, watchersCount, forksCount, pushedAt }) => (<tr key={id}>
                         <td>{id}</td>
                         <td>
                             <a href={url}>{fullName}</a>
@@ -59,7 +69,7 @@ function TrendingRepos() {
                                 <span className="ml-1">Star</span>
                             </button>
                         </td>
-                    </tr>)}
+                    </tr>))}
                 </tbody>
             </table>
         </div>
