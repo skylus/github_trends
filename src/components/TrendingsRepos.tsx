@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import Repo from "../interfaces/Repo";
-import { getMostPopularRepos, getStarredReposForCurrentUser, isStarred, starRepo } from "../services/GithubService";
+import { getMostPopularRepos, getStarredReposForCurrentUser, isStarred, toggleRepoStarForCurrentUser } from "../services/GithubService";
 import classNames from "classnames";
 
 function TrendingRepos() {
@@ -20,9 +20,7 @@ function TrendingRepos() {
     }, []);
 
     useEffect(() => {
-        if (shouldUpdateStarred) {
-            setShouldUpdateStarred(false);
-        }
+        setShouldUpdateStarred(false);
     }, [shouldUpdateStarred]);
 
     return (
@@ -40,7 +38,7 @@ function TrendingRepos() {
                     </tr>
                 </thead>
                 <tbody>
-                    {repos.map(({ id, fullName, starsCount, url, watchersCount, forksCount, pushedAt }) => <tr>
+                    {repos.map(({ id, fullName, starsCount, url, watchersCount, forksCount, pushedAt }) => <tr key={id}>
                         <td>{id}</td>
                         <td>
                             <a href={url}>{fullName}</a>
@@ -53,7 +51,7 @@ function TrendingRepos() {
                             <button
                                 className={classNames("button is-light", { "is-primary": isStarred(id) })}
                                 onClick={() => {
-                                    starRepo(id);
+                                    toggleRepoStarForCurrentUser(id);
                                     setShouldUpdateStarred(true);
                                 }}
                             >

@@ -36,9 +36,12 @@ const STARRED_REPOS_STORAGE_KEY = 'starredRepos';
 
 const getStarredReposForCurrentUser = () => JSON.parse(localStorage.getItem(STARRED_REPOS_STORAGE_KEY) || '[]');
 
-const starRepo = (repoID: number): void => {
+const toggleRepoStarForCurrentUser = (repoID: number): void => {
   const currentlyStarredRepos = getStarredReposForCurrentUser();
-  localStorage.setItem(STARRED_REPOS_STORAGE_KEY, JSON.stringify([...currentlyStarredRepos, repoID]));
+  localStorage.setItem(STARRED_REPOS_STORAGE_KEY, JSON.stringify(
+    currentlyStarredRepos.includes(repoID) ?
+    currentlyStarredRepos.filter((id: number) => id !== repoID) :
+    [...currentlyStarredRepos, repoID]));
 }
 
 const isStarred = (repoID: number) => {
@@ -46,4 +49,4 @@ const isStarred = (repoID: number) => {
   return currentlyStarredRepos.includes(repoID);
 }
 
-export { getMostPopularRepos, starRepo, isStarred, getStarredReposForCurrentUser };
+export { getMostPopularRepos, toggleRepoStarForCurrentUser, isStarred, getStarredReposForCurrentUser };
