@@ -14,7 +14,6 @@ function TrendingRepos() {
         async function fetchRepos() {
             const repos = await getMostPopularRepos()
             setRepos(repos);
-            console.log('repos', repos)
         }
 
         fetchRepos();
