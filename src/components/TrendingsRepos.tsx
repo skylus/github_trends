@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import Repo from "../interfaces/Repo";
-import { getMostPopularRepos, getStarredReposForCurrentUser, isStarred, toggleRepoStarForCurrentUser } from "../services/GithubService";
+import { getMostPopularRepos, isStarred, toggleRepoStarForCurrentUser } from "../services/GithubService";
 import classNames from "classnames";
 
 function TrendingRepos() {
@@ -44,7 +44,7 @@ function TrendingRepos() {
                         <th>Stars️ ⭐️</th>
                         <th>Forks <FontAwesomeIcon icon={faCodeBranch} /></th>
                         <th>Watchers 👀</th>
-                        <th></th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,7 +69,7 @@ function TrendingRepos() {
                                     }}
                                 >
                                     <FontAwesomeIcon icon={faStar} />
-                                    <span className="ml-1">Star</span>
+                                    <span className="ml-1">{isStarred(id) ? 'Unstar' : 'Star'}</span>
                                 </button>
                             </td>
                         </tr>
