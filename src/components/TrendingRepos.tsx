@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faCodeBranch } from "@fortawesome/free-solid-svg-icons";
 import { getMostPopularRepos, isRepoStarredByCurrentUser, toggleRepoStarForCurrentUser } from "../utils/githubUtils";
 import Repo from "../interfaces/Repo";
 
