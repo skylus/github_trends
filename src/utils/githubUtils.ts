@@ -11,7 +11,7 @@ const octokit = new Octokit();
 const getMostPopularRepos = async (): Promise<Repo[]> => {
   try {
     const currentDate = new Date();
-    const dateToFetchFrom=new Date(currentDate.setDate(currentDate.getDate() - 7));
+    const dateToFetchFrom = new Date(currentDate.setDate(currentDate.getDate() - 7));
     const q = `created:>${dateToFetchFrom.getFullYear()}-${dateToFetchFrom.getMonth() + 1}-${dateToFetchFrom.getDate()}`
 
     const results: SearchReposResponseType = await octokit.rest.search.repos({
