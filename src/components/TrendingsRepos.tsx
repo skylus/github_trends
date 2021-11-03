@@ -2,10 +2,12 @@ import React, {useEffect, useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import Repo from "../interfaces/Repo";
-import { getMostPopularRepos } from "../services/GithubService";
+import { getMostPopularRepos, getStarredReposForCurrentUser, isStarred, starRepo } from "../services/GithubService";
+import classNames from "classnames";
 
 function TrendingRepos() {
     const [repos, setRepos] = useState<Repo[]>([]);
+    const [shouldUpdateStarred, setShouldUpdateStarred] = useState(false);
 
     useEffect(() => {
         async function fetchRepos() {
@@ -15,7 +17,14 @@ function TrendingRepos() {
         }
 
         fetchRepos();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (shouldUpdateStarred) {
+            setShouldUpdateStarred(false);
+        }
+    }, [shouldUpdateStarred]);
+
     return (
         <div>
             <table className="table is-fullwidth is-striped">
@@ -41,7 +50,13 @@ function TrendingRepos() {
                         <td>{forksCount}</td>
                         <td>{watchersCount}</td>
                         <td>
-                            <button className="button is-light">
+                            <button
+                                className={classNames("button is-light", { "is-primary": isStarred(id) })}
+                                onClick={() => {
+                                    starRepo(id);
+                                    setShouldUpdateStarred(true);
+                                }}
+                            >
                                 <FontAwesomeIcon icon={faStar} />
                                 <span className="ml-1">Star</span>
                             </button>
