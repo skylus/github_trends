@@ -6,6 +6,7 @@ interface Repo {
     watchersCount: number;
     forksCount: number;
     pushedAt: string;
+    description: string | null;
 }
 
 export default Repo;

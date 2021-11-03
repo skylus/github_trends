@@ -28,7 +28,8 @@ const getMostPopularRepos = async (): Promise<Repo[]> => {
    pushed_at: pushedAt,
    html_url: url,
    id,
- }) => ({ starsCount, forksCount, watchersCount, fullName, pushedAt, id, url }))
+   description,
+ }) => ({ starsCount, forksCount, watchersCount, fullName, pushedAt, id, url, description }))
 }
 
 // This is inside this file since we assume in real life it would go to github api and make the actual starring.

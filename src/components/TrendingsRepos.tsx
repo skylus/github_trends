@@ -39,6 +39,7 @@ function TrendingRepos() {
                     <tr>
                         <th>ID</th>
                         <th>Full Name</th>
+                        <th>Description</th>
                         <th>Pushed At</th>
                         <th>Stars️ ⭐️</th>
                         <th>Forks <FontAwesomeIcon icon={faCodeBranch} /></th>
@@ -48,28 +49,31 @@ function TrendingRepos() {
                 </thead>
                 <tbody>
                     {repos.filter(repo => !showStarredOnly || isStarred(repo.id))
-                      .map(({ id, fullName, starsCount, url, watchersCount, forksCount, pushedAt }) => (<tr key={id}>
-                        <td>{id}</td>
-                        <td>
-                            <a href={url}>{fullName}</a>
-                        </td>
-                        <td>{new Date(pushedAt).toString()}</td>
-                        <td>{starsCount}</td>
-                        <td>{forksCount}</td>
-                        <td>{watchersCount}</td>
-                        <td>
-                            <button
-                                className={classNames("button is-light", { "is-primary": isStarred(id) })}
-                                onClick={() => {
-                                    toggleRepoStarForCurrentUser(id);
-                                    setShouldUpdateStarred(true);
-                                }}
-                            >
-                                <FontAwesomeIcon icon={faStar} />
-                                <span className="ml-1">Star</span>
-                            </button>
-                        </td>
-                    </tr>))}
+                      .map(({ id, fullName, starsCount, url, watchersCount, forksCount, pushedAt, description }) => (
+                        <tr key={id}>
+                            <td>{id}</td>
+                            <td>
+                                <a href={url}>{fullName}</a>
+                            </td>
+                            <td>{description}</td>
+                            <td>{new Date(pushedAt).toString()}</td>
+                            <td>{starsCount}</td>
+                            <td>{forksCount}</td>
+                            <td>{watchersCount}</td>
+                            <td>
+                                <button
+                                    className={classNames("button is-light", { "is-primary": isStarred(id) })}
+                                    onClick={() => {
+                                        toggleRepoStarForCurrentUser(id);
+                                        setShouldUpdateStarred(true);
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faStar} />
+                                    <span className="ml-1">Star</span>
+                                </button>
+                            </td>
+                        </tr>
+                  ))}
                 </tbody>
             </table>
         </div>
