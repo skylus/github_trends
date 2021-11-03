@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {getMostPopularRepos} from "../services/GithubService";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import Repo from "../interfaces/Repo";
+import { getMostPopularRepos } from "../services/GithubService";
 
 function TrendingRepos() {
     const [repos, setRepos] = useState<Repo[]>([]);
@@ -23,8 +25,9 @@ function TrendingRepos() {
                         <th>Full Name</th>
                         <th>Pushed At</th>
                         <th>Stars️ ⭐️</th>
-                        <th>Forks 🍴</th>
+                        <th>Forks <FontAwesomeIcon icon={faCodeBranch} /></th>
                         <th>Watchers 👀</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +40,12 @@ function TrendingRepos() {
                         <td>{starsCount}</td>
                         <td>{forksCount}</td>
                         <td>{watchersCount}</td>
-
+                        <td>
+                            <button className="button is-light">
+                                <FontAwesomeIcon icon={faStar} />
+                                <span className="ml-1">Star</span>
+                            </button>
+                        </td>
                     </tr>)}
                 </tbody>
             </table>
